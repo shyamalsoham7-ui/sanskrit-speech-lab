@@ -1,0 +1,25 @@
+
+:root{--bg:#faf7f2;--fg:#2a2118;--card:#fff;--mut:#7a6c5d;--ac:#b4531a;--bd:#e5dccf;--ok:#2e7d32;--bad:#c62828;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1713;--fg:#f1e8dc;--card:#26211b;--mut:#a89988;--ac:#e8863f;--bd:#3a332a;--ok:#66bb6a;--bad:#ef5350;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1b1713;--fg:#f1e8dc;--card:#26211b;--mut:#a89988;--ac:#e8863f;--bd:#3a332a;--ok:#66bb6a;--bad:#ef5350;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 "Noto Sans Devanagari",system-ui,sans-serif}
+main{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+h1{font-size:24px;margin:0}h2{font-size:17px;margin:0 0 10px}p.sub{color:var(--mut);margin:4px 0 16px}
+nav{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+nav button{flex:1;min-width:120px}
+button,.btn,select,input[type=text]{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;cursor:pointer}
+button.on,button.pri{background:var(--ac);border-color:var(--ac);color:#fff}
+input[type=text]{cursor:text;width:100%}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.mut{color:var(--mut);font-size:13px}.big{font-size:44px;font-weight:600;color:var(--ac);line-height:1.1}
+table{border-collapse:collapse;width:100%}td,th{padding:5px 8px;border-bottom:1px solid var(--bd);text-align:left;font-size:14px}
+.scroll{overflow-x:auto}canvas{width:100%;display:block}
+.bar{height:14px;background:var(--ac);border-radius:4px}.tag{padding:1px 8px;border-radius:10px;font-size:12px;color:#fff}
+audio{height:34px;max-width:100%}.hide{display:none}
+
+.meter{height:6px;background:var(--bd);border-radius:3px;margin:4px 0;overflow:hidden}.lvl{height:100%;width:0;background:var(--ok);transition:width .05s}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sanskrit Speech Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body><main>
+<h1>Sanskrit Speech Lab</h1>
+<p class="sub">MFCC-based pronunciation assessment and HMM-based Gita shloka recognition. Everything runs in your browser; audio never leaves your device.</p>
+<nav><button id="t0" class="on">1 · Pronunciation</button><button id="t1">2 · Verse recognition</button><button id="t2">About</button></nav>
+
+<section id="p0">
+ <div class="card"><h2>Setup</h2>
+  <div class="row"><label>Word&nbsp;<select id="word"></select></label>
+  <label>Strictness&nbsp;<input id="strict" type="range" min="3" max="12" step="0.5" value="6"></label><span class="mut" id="sv"></span></div>
+  <p class="mut">Record the reference once (teacher or a good speaker); it is remembered in this browser. Then record or upload the student attempt.</p>
+ </div>
+ <div class="grid">
+  <div class="card"><h2>Reference</h2><div id="rRef"></div></div>
+  <div class="card"><h2>Student</h2><div id="rStu"></div></div>
+ </div>
+ <button class="pri" id="cmp">Compare pronunciation</button>
+ <div id="res" class="hide" style="margin-top:14px"></div>
+</section>
+
+<section id="p1" class="hide">
+ <div class="card"><h2>Enroll verse samples</h2>
+  <div class="row"><select id="preset"></select></div>
+  <div class="grid"><input type="text" id="vl" placeholder="Verse label, e.g. BG 9.26"><input type="text" id="vt" placeholder="Transliteration (optional)"></div>
+  <div id="rEn" style="margin-top:8px"></div>
+  <div class="row"><button class="pri" id="addS">Add sample and train model</button><span class="mut" id="enSt">Record 2–3 samples per verse for better accuracy.</span></div>
+  <div class="scroll"><table id="vtab"></table></div>
+ </div>
+ <div class="card"><h2>Recognize a verse</h2><div id="rTest"></div><div id="rec" style="margin-top:10px"></div></div>
+ <div class="card"><h2>Evaluation</h2>
+  <p class="mut">Leave-one-out test: each sample is held out, models are retrained without it, and the sample is classified. Needs at least 2 verses and a verse with 2+ samples.</p>
+  <button id="loo">Run leave-one-out test</button><div id="looOut" style="margin-top:8px"></div></div>
+</section>
+
+<section id="p2" class="hide">
+ <div class="card"><h2>Pipeline</h2>
+  <p><b>Features.</b> 16 kHz audio, pre-emphasis 0.97, 25 ms Hamming frames with 10 ms hop, 512-point FFT, 26 mel filters, log, DCT to 13 MFCCs, silence trimming, cepstral mean normalization. Spectral centroid, zero-crossing rate, energy and duration are tracked too.</p>
+  <p><b>Pronunciation.</b> Dynamic time warping aligns student to reference on MFCC c1–c12. The mean aligned distance d becomes a similarity of 100·exp(−(d/strictness)²). Per-segment cost, per-coefficient difference, duration and brightness show what differs.</p>
+  <p><b>Verses.</b> One left-to-right HMM per verse (20 states, diagonal Gaussians, self-loop and advance transitions), trained by Viterbi re-estimation (segmental k-means) from your enrolled samples. A test recording is scored against every model by length-normalized Viterbi log-likelihood; the best score is the recognized verse.</p>
+  <p class="mut">Limits: models are speaker-dependent when trained on one voice; the similarity score is a calibrated heuristic, not a phonetic ground truth. Use the strictness slider to calibrate against teacher judgments.</p></div>
+</section>
+</main>
+<script src="app.js"></script></body></html>
